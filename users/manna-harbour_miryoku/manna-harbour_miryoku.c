@@ -6,6 +6,7 @@
 #include QMK_KEYBOARD_H
 
 #include "manna-harbour_miryoku.h"
+#include "features/achordion.h"
 
 
 // Additional Features double tap guard
@@ -58,6 +59,18 @@ const key_override_t **key_overrides = (const key_override_t *[]){
     NULL
 };
 
+
+// achordion
+bool process_record_user(uint16_t keycode, keyrecord_t* record) {
+  if (!process_achordion(keycode, record)) { return false; }
+  // Your macros ...
+
+  return true;
+}
+
+void matrix_scan_user(void) {
+  achordion_task();
+}
 
 // thumb combos
 
