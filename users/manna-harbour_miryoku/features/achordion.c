@@ -243,6 +243,8 @@ static bool on_left_hand(keypos_t pos) {
 #ifdef SPLIT_KEYBOARD
   return pos.row < MATRIX_ROWS / 2;
 #else
+  // use split keyboard behavior, for some reason 3w6hs doesn't set this flag
+  return pos.row < MATRIX_ROWS / 2;
   return (MATRIX_COLS > MATRIX_ROWS) ? pos.col < MATRIX_COLS / 2
                                      : pos.row < MATRIX_ROWS / 2;
 #endif
