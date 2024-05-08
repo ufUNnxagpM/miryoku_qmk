@@ -76,9 +76,15 @@ bool achordion_chord(uint16_t tap_hold_keycode,
                      keyrecord_t* tap_hold_record,
                      uint16_t other_keycode,
                      keyrecord_t* other_record) {
-  // Also allow same-hand holds when the other key is in the rows below the
-  // alphas. I need the `% (MATRIX_ROWS / 2)` because my keyboard is split.
-  if (other_record->event.key.row % (MATRIX_ROWS / 2) >= 4) { return true; }
+  switch (tap_hold_keycode) {
+    // Avoid delay on CMD with these keys, mainly when using the mouse
+    case LGUI_T(KC_A):
+      if (other_keycode == KC_C) { return true; } 
+      if (other_keycode == KC_V) { return true; } 
+      if (other_keycode == KC_F) { return true; } 
+      if (other_keycode == KC_W) { return true; } 
+      break;
+  }
 
   // Otherwise, follow the opposite hands rule.
   return achordion_opposite_hands(tap_hold_record, other_record);
